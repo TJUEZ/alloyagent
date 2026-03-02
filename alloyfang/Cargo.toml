@@ -1,0 +1,48 @@
+[package]
+name = "alloyfang"
+version = "0.1.0"
+edition = "2021"
+description = "AloyFang: OpenFang Agent OS with AlloyStack serverless optimizations — benchmark suite"
+
+[dependencies]
+openfang-runtime = { path = "../openfang/crates/openfang-runtime" }
+openfang-types = { path = "../openfang/crates/openfang-types" }
+openfang-memory = { path = "../openfang/crates/openfang-memory" }
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+async-trait = "0.1"
+tracing = "0.1"
+bytes = "1"
+dashmap = "6"
+num_cpus = "1"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports", "async_tokio"] }
+tokio-test = "0.4"
+tempfile = "3"
+
+[[bench]]
+name = "cold_start"
+harness = false
+
+[[bench]]
+name = "memory_usage"
+harness = false
+
+[[bench]]
+name = "tool_execution"
+harness = false
+
+[[bench]]
+name = "reference_passing"
+harness = false
+
+[[bench]]
+name = "parallel_execution"
+harness = false
+
+[[bench]]
+name = "agent_loop"
+harness = false
