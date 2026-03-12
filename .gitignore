@@ -1,0 +1,63 @@
+# Build artifacts
+/target
+**/target/
+*.rs.bk
+*.pdb
+
+# Cargo (use workspace lock file)
+Cargo.lock
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# User config (may contain API keys)
+config.toml
+
+# Certificates & keys
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+
+# Runtime artifacts
+collector_hand_state.json
+collector_knowledge_base.json
+predictions_database.json
+prediction_report_*.md
+BUILD_LOG.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE & tools
+.idea/
+.vscode/
+.claude/
+*.swp
+*.swo
+*~
+
+# Benchmark reports
+alloyfang/reports/
+alloyfang/target/
+
+# Web build
+web/dist/
+web/node_modules/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
