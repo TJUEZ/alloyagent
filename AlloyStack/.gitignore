@@ -1,0 +1,16 @@
+target
+tinywasm
+venv
+wasmtime-as-lib
+image_content/*
+
+.VSCodeCounter
+.gdbinit
+
+./*.json
+*.log
+_members.txt
+
+**/*.img
+**/fake*txt
+**/*.bin

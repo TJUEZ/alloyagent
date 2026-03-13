@@ -1,0 +1,26 @@
+{
+    "services": [
+        [
+            "fdtab",
+            "libfdtab.so"
+        ],
+        [
+            "stdio",
+            "libstdio.so"
+        ],
+        [
+            "mm",
+            "libmm.so"
+        ]
+    ],
+    "apps": [
+        [
+            "hello1",
+            "libhello_world.so"
+        ],
+        [
+            "hello2",
+            "libhello_world.so"
+        ]
+    ]
+}

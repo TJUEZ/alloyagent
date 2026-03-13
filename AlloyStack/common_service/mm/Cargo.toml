@@ -1,0 +1,28 @@
+[package]
+name = "mm"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+as_std = { path = "../../as_std", features = ["alloc_def", "panic_def"] }
+as_hostcall = { path = "../../as_hostcall", features = [
+    "fatfs",
+    "mmap_file_backend",
+    "mm",
+] }
+
+lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
+spin = "0.9.8"
+hashbrown = { version = "0.14", default-features = false, features = ["ahash"] }
+
+libc = "0.2.150"
+linked_list_allocator = "0.10.5"
+
+
+[features]
+mpk = ["as_std/mpk"]
+default = []

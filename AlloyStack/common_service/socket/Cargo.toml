@@ -1,0 +1,37 @@
+[package]
+name = "socket"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+as_std = { path = "../../as_std", features = [] }
+as_hostcall = { path = "../../as_hostcall", features = ["socket", "fatfs"] }
+
+log = "0.4.20"
+# env_logger = "0.10.0"
+lazy_static = "1.4.0"
+managed = { version = "0.8", default-features = false, features = ["map"] }
+defmt = { version = "0.3", optional = true }
+libc = { version = "0.2.147", optional = true }
+rand = "*"
+smoltcp = { version = "0.11.0", default-features = false, features = [
+    "log",
+    "std",
+    "medium-ethernet",
+    "medium-ip",
+    "phy-tuntap_interface",
+    "proto-ipv4",
+    "socket-tcp",
+    "socket-dns",
+] }
+
+[features]
+log = []
+mpk = ["as_std/mpk"]
+
+default = []

@@ -1,0 +1,57 @@
+{
+  "services": [
+    [
+      "fdtab",
+      "libfdtab.so"
+    ],
+    [
+      "stdio",
+      "libstdio.so"
+    ],
+    [
+      "mm",
+      "libmm.so"
+    ],
+    [
+      "fatfs",
+      "libfatfs.so"
+    ],
+    [
+      "time",
+      "libtime.so"
+    ]
+  ],
+  "apps": [
+    [
+      "file_reader",
+      "libfile_reader.so"
+    ],
+    [
+      "sorter",
+      "libsorter.so"
+    ]
+  ],
+  "groups": [
+    {
+      "list": [
+        {
+          "name": "file_reader",
+          "args": {
+            "slot_name": "input-part-0",
+            "input_file": "sort_data_0.txt"
+          }
+        }
+      ],
+      "args": {}
+    },
+    {
+      "list": [
+        "sorter"
+      ],
+      "args": {
+        "sorter_num": "1",
+        "merger_num": "1"
+      }
+    }
+  ]
+}

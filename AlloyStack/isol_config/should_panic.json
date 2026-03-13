@@ -1,0 +1,18 @@
+{
+  "services": [
+    [
+      "fdtab",
+      "libfdtab.so"
+    ],
+    [
+      "stdio",
+      "libstdio.so"
+    ]
+  ],
+  "apps": [
+    [
+      "hello1",
+      "libshould_panic.so"
+    ]
+  ]
+}

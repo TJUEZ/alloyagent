@@ -1,0 +1,38 @@
+{
+    "services": [
+        [
+            "mm",
+            "libmm.so"
+        ],
+        [
+            "time",
+            "libtime.so"
+        ],
+        [
+            "fdtab",
+            "libfdtab.so"
+        ],
+        [
+            "stdio",
+            "libstdio.so"
+        ],
+        [
+            "fatfs",
+            "libfatfs.so"
+        ]
+    ],
+    "apps": [
+        [
+            "array_sum",
+            "libarray_sum.so"
+        ]
+    ],
+    "groups": [
+        {
+            "list": [
+                "array_sum"
+            ],
+            "args": {"array_num": "0"}
+        }
+    ]
+}

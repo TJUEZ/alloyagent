@@ -1,0 +1,30 @@
+# cargo-features = ["profile-rustflags"]
+
+[workspace]
+members = [
+    "bins/*",
+    "libasvisor",
+    "as_hostcall",
+    "as_std_proc_macro",
+    "as_std",
+    "wasmtime_wasi_api",
+]
+
+# The reason for excluding "user/" is obvious. This workspace can be regarded as 
+# a toolchain of libos. But "user/" are users' function. 
+# 
+# The reason for excluding "common_service/" is relate to feature gates of as_std. 
+# In current implementation, as_std has conflict features (e.g. `panic_def` and 
+# `unwinding`). Of course, if add "user/" to members, will also have problem of 
+# feature gate. 
+exclude = ["user/", "common_service/", "baseline/"]
+default-members = ["bins/asvisor"]
+resolver = "2"
+
+[workspace.dependencies]
+libasvisor = { path = "libasvisor", default-features = false, features = [
+    # "enable_mpk",
+] }
+
+as_hostcall = { path = "as_hostcall" }
+as_std = { path = "as_std" }

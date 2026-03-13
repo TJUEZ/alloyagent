@@ -1,0 +1,24 @@
+[package]
+name = "mmap_file_backend"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+as_std = { path = "../../as_std" }
+as_hostcall = { path = "../../as_hostcall", features = [
+    "fatfs",
+    "mmap_file_backend",
+] }
+
+nix = { version = "0.27.1", features = ["poll", "signal", "fs", "event"] }
+userfaultfd = { version = "0.7.0", features = [] }
+
+
+[features]
+mpk = ["as_std/mpk"]
+default = []

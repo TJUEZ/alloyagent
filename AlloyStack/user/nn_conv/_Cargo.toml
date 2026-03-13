@@ -1,0 +1,24 @@
+[package]
+name = "nn_conv"
+version = "0.1.0"
+edition = "2021"
+build = "../../build_user.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+as_std = { path = "../../as_std", features = ["alloc_def", "unwinding"] }
+as_hostcall = { path = "../../as_hostcall" }
+as_std_proc_macro = { path = "../../as_std_proc_macro" }
+
+burn = { path = "/home/yjn/rust_project/burn/burn", default-features = false, features = [
+    "ndarray-no-std",
+] }
+serde = { version = "1.0.193", default-features = false, features = ["derive"] }
+thiserror-no-std = "2.0.2"
+
+[features]
+mpk = ["as_std/mpk"]
+default = []

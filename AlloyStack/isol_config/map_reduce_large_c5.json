@@ -1,0 +1,65 @@
+{
+  "services": [
+    [
+      "fdtab",
+      "libfdtab.so"
+    ],
+    [
+      "stdio",
+      "libstdio.so"
+    ],
+    [
+      "mm",
+      "libmm.so"
+    ],
+    [
+      "time",
+      "libtime.so"
+    ],
+    [
+      "fatfs",
+      "libfatfs.so"
+    ]
+  ],
+  "apps": [
+    [
+      "file_reader",
+      "libfile_reader.so"
+    ],
+    [
+      "mapper",
+      "libmapper.so"
+    ],
+    [
+      "reducer",
+      "libreducer.so"
+    ]
+  ],
+  "fs_image": "fs_images/fatfs.img",
+  "groups": [
+    {
+      "list": [
+        "mapper",
+        "mapper",
+        "mapper",
+        "mapper",
+        "mapper"
+      ],
+      "args": {
+        "reducer_num": "5"
+      }
+    },
+    {
+      "list": [
+        "reducer",
+        "reducer",
+        "reducer",
+        "reducer",
+        "reducer"
+      ],
+      "args": {
+        "mapper_num": "5"
+      }
+    }
+  ]
+}

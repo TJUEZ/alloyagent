@@ -1,0 +1,25 @@
+[package]
+name = "hello_world"
+version = "0.1.0"
+edition = "2021"
+build = "../../build_user.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
+as_std = { path = "../../as_std", features = [
+    "alloc_def",
+    "panic_def",
+], optional = true }
+as_hostcall = { path = "../../as_hostcall", optional = true }
+cfg-if = "1.0.0"
+
+[features]
+with_libos = ["as_std", "as_hostcall"]
+measure_mem = ["with_libos"]
+mpk = ["as_std/mpk"]
+pkey_per_func = ["mpk"]
+
+default = ["with_libos"]
