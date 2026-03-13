@@ -10,6 +10,155 @@ Benchmark suite for AlloyStack serverless workflow optimizations.
 | **openfang** | Agent Operating System - open source implementation |
 | **AlloyStack** | Library OS for serverless workflow applications (EuroSys 2025) |
 
+## 架构图
+
+### 1. AlloyStack 架构图
+
+```mermaid
+graph TB
+    subgraph "User Space"
+        Workflow[("Workflow<br/>Specification")]
+        UserFunc[("User Functions<br/>Rust/Python/C")]
+    end
+
+    subgraph "AlloyStack LibOS"
+        as_std["as-std<br/>(Standard Library)"]
+        as_hostcall["as-hostcall<br/>(System Calls)"]
+        common_service["Common Services"]
+
+        subgraph "Core Optimizations"
+            OnDemand["On-Demand<br/>Loading"]
+            RefPass["Reference<br/>Passing"]
+        end
+    end
+
+    subgraph "as-visor"
+        MPK[("MPK<br/>Protection")]
+        VMM[("VMM<br/>Management")]
+    end
+
+    Workflow --> as_std
+    UserFunc --> as_std
+    as_std --> as_hostcall
+    as_hostcall --> common_service
+
+    common_service --> OnDemand
+    common_service --> RefPass
+
+    as_hostcall --> MPK
+    as_hostcall --> VMM
+```
+
+**核心组件说明：**
+- **as-std**: 标准库，为用户函数提供统一的 API
+- **as-hostcall**: 系统调用接口，处理请求
+- **common_service**: LibOS 模块（文件系统、网络等）
+- **On-Demand Loading**: 按需加载，优化冷启动
+- **Reference Passing**: 引用传递，减少数据传输开销
+- **as-visor**: 虚拟机管理器，基于 MPK 做隔离
+
+---
+
+### 2. OpenFang 架构图
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        CLI[("openfang-cli<br/>TUI交互")]
+        API[("openfang-api<br/>HTTP/WS")]
+        Channels[("Channels<br/>多平台集成")]
+    end
+
+    subgraph "Core Layer"
+        Kernel[("openfang-kernel<br/>核心内核")]
+        Runtime[("openfang-runtime<br/>运行时")]
+    end
+
+    subgraph "Storage Layer"
+        Memory[("openfang-memory<br/>向量内存")]
+        DB[("SQLite<br/>持久化")]
+    end
+
+    subgraph "Extension Layer"
+        Skills[("Skills<br/>WASM技能")]
+        Extensions[("Extensions<br/>扩展")]
+        Hands[("Hands<br/>工具集")]
+    end
+
+    subgraph "LLM Integration"
+        Drivers[("LLM Drivers<br/>OpenAI/Groq/...")]
+    end
+
+    CLI --> API
+    Channels --> API
+    API --> Kernel
+    Kernel --> Runtime
+    Kernel --> Memory
+    Kernel --> DB
+    Runtime --> Skills
+    Runtime --> Extensions
+    Runtime --> Hands
+    Runtime --> Drivers
+```
+
+**核心组件说明：**
+- **openfang-cli**: TUI 交互界面
+- **openfang-api**: HTTP/WebSocket API 服务
+- **openfang-channels**: 多平台消息通道（Slack、Telegram 等）
+- **openfang-kernel**: 核心内核，管理 agent 生命周期
+- **openfang-runtime**: 运行时环境，执行 agent 逻辑
+- **openfang-memory**: 向量内存存储
+- **Skills**: WASM 技能模块（沙箱执行）
+- **LLM Drivers**: LLM 驱动抽象
+
+---
+
+### 3. AlloyFang 架构图
+
+```mermaid
+graph TB
+    subgraph "Benchmark Suite [alloyfang]"
+        Bench[("Benchmarks<br/>criterion")]
+        AloyFangRuntime["AloyFangRuntime<br/>封装层"]
+    end
+
+    subgraph "AlloyStack Optimizations [openfang-runtime]"
+        subgraph "Core Optimizations"
+            LazyLoader["LazyWasmLoader<br/>延迟加载"]
+            RefPass["SharedBuffer<br/>引用传递"]
+            ParallelExec["ParallelWorkflowExecutor<br/>并行执行"]
+        end
+
+        Metrics["OptimMetrics<br/>性能指标"]
+    end
+
+    subgraph "Comparison Modes"
+        Optimized["optimized()<br/>AlloyStack优化模式"]
+        Baseline["baseline()<br/>原生模式"]
+    end
+
+    Bench --> AloyFangRuntime
+
+    Optimized --> LazyLoader
+    Optimized --> RefPass
+    Optimized --> ParallelExec
+
+    Baseline -.->|"无优化"| LazyLoader
+    Baseline -.->|"无优化"| RefPass
+    Baseline -.->|"无优化"| ParallelExec
+
+    LazyLoader --> Metrics
+    RefPass --> Metrics
+    ParallelExec --> Metrics
+```
+
+**AlloyFang 工作流程：**
+1. 通过 `AloyFangRuntime::optimized()` 启用所有 AlloyStack 优化
+2. 通过 `AloyFangRuntime::baseline()` 禁用所有优化作为基准
+3. Benchmark 对比两种模式的性能差异
+
+---
+
 ## Quick Start
 
 ```bash
@@ -40,7 +189,7 @@ alloyfang/                      # Benchmark 套件
 openfang/crates/openfang-runtime/src/alloystack_optim/  # 核心优化实现
 ├── mod.rs                      # AlloyStackRuntime 运行时
 ├── lazy_loader.rs              # 延迟加载 WASM 模块
-├── reference_passing.rs       # 零拷贝数据共享
+├── reference_passing.rs        # 零拷贝数据共享
 ├── parallel_executor.rs        # 并行工作流执行
 └── metrics.rs                  # 性能指标收集
 ```
