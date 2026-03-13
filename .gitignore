@@ -4,9 +4,6 @@
 *.rs.bk
 *.pdb
 
-# Cargo (use workspace lock file)
-Cargo.lock
-
 # Environment & secrets
 .env
 .env.*
@@ -61,6 +58,3 @@ __pycache__/
 *.pyc
 venv/
 .venv/
-
-# Local projects
-zeroclaw/
